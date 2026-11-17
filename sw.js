@@ -1,6 +1,4 @@
-/* Funciona sin internet: guarda la app y sus imágenes en el dispositivo.
-   Al publicar una versión nueva, sube el número de VERSION para que se renueve. */
-const VERSION = 'ice-v3-1';
+const VERSION = 'ice-v3-2';
 const ARCHIVOS = [
   "./",
   "./index.html",
@@ -10,6 +8,21 @@ const ARCHIVOS = [
   "./icon-512.png",
   "./icon-maskable-512.png",
   "./apple-touch-icon.png",
+  "./img/instructivo/p1.jpg",
+  "./img/instructivo/p2a.jpg",
+  "./img/instructivo/p2b.jpg",
+  "./img/instructivo/p3.jpg",
+  "./img/instructivo/p4a.jpg",
+  "./img/instructivo/p4b.jpg",
+  "./img/instructivo/p5.jpg",
+  "./img/instructivo/p6a.jpg",
+  "./img/instructivo/p6b.jpg",
+  "./img/instructivo/p7a.jpg",
+  "./img/instructivo/p7b.jpg",
+  "./img/instructivo/p8a.jpg",
+  "./img/instructivo/p8b.jpg",
+  "./img/instructivo/p9a.jpg",
+  "./img/instructivo/p9b.jpg",
   "./img/adorno-divisor.png",
   "./img/adorno-medallon-cabecera.png",
   "./img/adorno-rombo-superior.png",
@@ -83,16 +96,14 @@ self.addEventListener('fetch', e => {
   const url = new URL(req.url);
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
 
-  /* La página siempre primero de la red, para ver los cambios al instante; sin internet, la guardada. */
-  if (req.mode === 'navigate') {
+    if (req.mode === 'navigate') {
     e.respondWith(fetch(req).then(r => {
       const copia = r.clone(); caches.open(VERSION).then(c => c.put('./index.html', copia));
       return r;
     }).catch(() => caches.match('./index.html').then(r => r || caches.match('./'))));
     return;
   }
-  /* Lo demás (imágenes, tipografías, jsPDF): primero lo guardado, y si no está, la red. */
-  e.respondWith(caches.match(req).then(hit => hit || fetch(req).then(r => {
+    e.respondWith(caches.match(req).then(hit => hit || fetch(req).then(r => {
     if (r && r.ok && (r.type === 'basic' || r.type === 'cors')) {
       const copia = r.clone(); caches.open(VERSION).then(c => c.put(req, copia));
     }
