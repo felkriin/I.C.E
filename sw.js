@@ -1,4 +1,4 @@
-const VERSION = 'ice-v3-2';
+const VERSION = 'ice-v3-3';
 const ARCHIVOS = [
   "./",
   "./index.html",
